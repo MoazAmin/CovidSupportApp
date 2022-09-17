@@ -1,0 +1,47 @@
+{
+  "short_name": "Covid-Support",
+  "name": "Covid-19 Health and Wellbeing",
+  "icons": [
+    {
+      "src": "src/icon192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "src/icon128.png",
+      "type": "image/png",
+      "sizes": "128x128",
+      "purpose": "any"
+    },
+    {
+      "src": "src/icon192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    },
+    {
+      "src": "src/icon128.png",
+      "type": "image/png",
+      "sizes": "128x128",
+      "purpose": "maskable"
+    },
+    {
+      "src": "src/icon512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    },
+    {
+      "src": "src/icon512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ],
+  "start_url": "index.php",
+  "background_color": "#b2ebf2",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#b2ebf2"
+}

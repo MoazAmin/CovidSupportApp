@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Scoreboard</title>
+        <!-----------Adjustments for Mobile--------------->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"></head>
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <!-----------Bootstrap Links---------------------->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/mdb.min.css">
+        <!-----------Custom Stylesheet & Icons------------->
+        <link rel="stylesheet" href="css/appStylesheet.css">
+        <link rel="apple-touch-icon" sizes = "128x128" href="icon128.png">
+        <link rel="icon" sizes="192x192" href="icon192.png">
+        <!-----------Manifest------------------------------>
+        <link rel="manifest" href="manifest.json">
+        <!-----------Content------------------------------->
+
+
+
+    </head>
+    <body>
+
+        <div class=" d-flex align-items-center justify-content-center covidHead">
+            <h1><strong>COVID-</strong><span class="text-muted">Support </span><i class="fas fa-hand-holding-heart fa-xs"></i></h1>
+            <br><br><br><br>
+        </div>
+        <div class="d-flex align-items-center justify-content-center">
+                <h2 >Scoreboard</h2>
+        </div>
+        <div class="d-flex align-items-center justify-content-center">
+            <div class="card" id="scoreboardCard">
+                <div class="card-body">
+                    <br>
+                        <div id ="accountHistoryDiv">
+                            <table id="scoreboard" class="table table-bordered table-sm" >
+                                <tr>
+                                    <th >Number of completed task's</th>
+                                    <th>Account Name</th>
+                                </tr>
+                            </table>
+                        </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-----------Navigation--------------------------------->
+    <footer class="bg-dark text-center text-white">
+        <div class="navBarWrapper">
+          <div class="container p-4 pb-0">
+            <section class="mb-4">
+                <a class="btn btn-outline-light btn-floating m-1" href="TaskPage.php" role="button"
+                ><i class="fas fa-clipboard-check fa-lg"></i
+                ></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="chatRoomView.php" role="button"
+                ><i class="fas fa-comment-alt fa-lg"></i
+                ></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="Maps.html" role="button"
+                ><i class="fas fa-map-marker-alt fa-lg"></i
+              ></a>
+            </section>
+          </div>
+        </div>
+    </footer>
+
+    <!-----------Custom JS------------------------------->
+    <script src="scoreboardView.js"></script>
+    <script src="scoreboardModel.js"></script>
+    <script src="scoreboardController.js"></script>
+    <script>
+    // Disable scrolling.
+    document.ontouchmove = function (e) {
+        e.preventDefault();
+    }
+    </script>
+    </body>
+</html>

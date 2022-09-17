@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-----------Adjustments for Mobile--------------->
+    <meta charset="UTF-8">
+    <meta name="theme-color" content= "#B2EBF2">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-----------Bootstrap Links---------------------->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/mdb.min.css">
+    <!-----------Custom Stylesheet & Icons------------->
+
+    <link rel="apple-touch-icon" sizes = "128x128" href="icon128.png">
+    <link rel="icon" sizes="192x192" href="icon192.png">
+    <!-----------Manifest------------------------------>
+    <link rel="manifest" href="manifest.json">
+    <style type="text/css">
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+            height: 91%;
+        }
+
+        /* Optional: Makes the sample page fill the window. */
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-size: 13px;
+        }
+
+        custom-map-control-button {
+            appearance: button;
+            background-color: #fff;
+            border: 0;
+            border-radius: 10px;
+            box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            margin: 10px;
+            padding: 0 0.5em;
+            height: 10rem;
+            font: 1000 100px Roboto, Arial, sans-serif;
+            overflow: hidden;
+        }
+        custom-map-control-button:hover {
+            background: #ebebeb;
+        }
+        .navBarWrapper {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 9vmax;
+            background-color: black;
+        }
+    </style>
+    <script>
+        let map, infoWindow,marker;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                    center: { lat: 55.8642, lng: -4.2518 },
+                    zoom: 16.5,
+
+                }
+            )
+            const svgMarker = {
+                path:
+                    " M49 17c0-.55-.45-1-1-1h-13c-.55 0-1-.45-1-1v-13c0-.55-.45-1-1-1h-16c-.55 0-1 .45-1 1v13c0 .55-.45 1-1 1h-13c-.55 0-1 .45-1 1v16c0 .55.45 1 1 1h13c.55 0 1 .45 1 1v13c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-13c0-.55.45-1 1-1h13c.55 0 1-.45 1-1v-16z",
+                fillColor: "green",
+                fillOpacity: 0.7,
+                strokeWeight: 0,
+                rotation: 0,
+                scale: 0.55,
+                anchor: new google.maps.Point(24.5, 75)
+            };
+            const helper = {
+                path:
+                    " M0-48c-9.8 0-17.7 7.8-17.7 17.4 0 15.5 17.7 30.6 17.7 30.6s17.7-15.4 17.7-30.6c0-9.6-7.9-17.4-17.7-17.4z ",
+                fillColor: "black",
+                fillOpacity: 1,
+                strokeWeight: 0,
+                rotation: 0,
+                scale: 1,
+                // anchor: new google.maps.Point(26.5, 75),
+            }
+            const location = {
+                path:  "M22 10h-3c-2.82 0-5 1.719-5 4.587v12.413c0 2 3 2 3 0v-12h1v32c0 1.233.768 2 2 2 1.235 0 2-.767 2-2v-37zm13 15l-4.017-10.357c-.349-2.321-2.693-4.643-5.368-4.643h-2.615v23.783c.5.002 1 .075 1 .217v13c0 1.04.917 2 2 2 1.086 0 2-.961 2-2v-13h3.869c.362 0 1.044-.654 1.044-1 0-.08.029-.931 0-1l-5.909-16.237-.034-.167c0-.237.199-.429.447-.429.211 0 .388.141.435.329l4.017 10.504c.267.601 1.365 1 2.087 1 .965 0 1.065-1.895 1.044-2z",
+                fillColor: "blue",
+                fillOpacity: 0.9,
+                strokeWeight: 0,
+                rotation: 0,
+                scale: 1,
+                anchor: new google.maps.Point(0, 0)
+            }
+
+            let info1 = '<h1>Glasgow Caledonian University</h1>' +
+                "<div id='Body'>Glasgow Caledonian University's ARC sports centre has been transformed into a key walk-through COVID-19 test centre to serve the local community of Glasgow.</div>" +
+                "<a href='https://www.google.com/maps/dir//Glasgow+Caledonian+University,+Cowcaddens+Rd,+Glasgow+G4+0BA,+United+Kingdom/@55.8668183,-4.2521489,17z/data=!4m16!1m6!3m5!1s0x4888441f6d37e73b:0xe44f66a88fe29ff5!2sGlasgow+Caledonian+University!8m2!3d55.8668183!4d-4.2499602!4m8!1m0!1m5!1m1!1s0x4888441f6d37e73b:0xe44f66a88fe29ff5!2m2!1d-4.2499602!2d55.8668183!3e2'>To get Directions, please click here &#128516</a>"
+
+
+            let marker = new google.maps.Marker({
+                position : { lat: 55.8668, lng: -4.2500},
+                map,
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+                icon : helper,
+
+            })
+            let marker1 = new google.maps.Marker({
+                position : { lat: 55.8668, lng: -4.2500},
+                map,
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+                icon : svgMarker,
+
+            })
+            marker.addListener('click',() => {
+                infowindow.open(map, marker);
+            })
+            marker1.addListener('click',() => {
+                infowindow.open(map, marker1);
+            })
+            const infowindow = new google.maps.InfoWindow({
+                content: info1,
+            });
+
+
+
+
+
+
+            let marker2 = new google.maps.Marker({
+                position : { lat: 55.8691, lng: -4.4351},
+                map : map,
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+                icon : helper
+            })
+            let marker2prime = new google.maps.Marker({
+                position : { lat: 55.8691, lng: -4.4351},
+                map : map,
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+                icon : svgMarker
+            })
+            let info2 ="<h1>Glasgow Airport</h1>" +
+                "<div id='Body'>Glasgow Airport has partnered up with ICTS UK & Ireland and the TAC Healthcare Group Ltd (TAC) to offer PCR Drive-Thur Tests to passengers who require this service before they fly.</div>" +
+                "<a href='https://www.google.com/maps/dir//Glasgow+Airport+(GLA),+Paisley,+UK/@55.8690545,-4.5050923,12z/data=!3m1!4b1!4m9!4m8!1m0!1m5!1m1!1s0x48884eb90111e0dd:0x24a888b519aa330b!2m2!1d-4.4350529!2d55.8690744!3e2'>To get Directions, please click here &#128516</a>"
+
+
+            marker2.addListener('click',() => {
+                infowindow2.open(map, marker2);
+            })
+            marker2prime.addListener('click',() => {
+                infowindow2.open(map, marker2prime);
+            })
+            const infowindow2 = new google.maps.InfoWindow({
+                content: info2,
+            });
+
+
+
+            let marker3 = new google.maps.Marker({
+                position : { lat: 55.8651, lng: -4.30638 },
+                map : map,
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+                icon : helper
+            })
+            let marker3prime = new google.maps.Marker({
+                position : { lat: 55.8651, lng: -4.30638 },
+                map : map,
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+                icon : svgMarker
+            })
+            let info3 ="<h1>Riverside Museum</h1>" +
+                "<div id='Body'>Riverside Museum now offers Do-It yourself Covid tests where there they will give you instructions on how to do the swab!</div>" +
+                "<a href='https://www.google.com/maps/dir//Riverside+Museum,+100+Pointhouse+Rd,+Partick,+Glasgow+G3+8RS,+United+Kingdom/@55.865103,-4.3083949,17z/data=!4m16!1m6!3m5!1s0x488845d0f24231ef:0xb7cf6d9b3165003!2sRiverside+Museum!8m2!3d55.865103!4d-4.3062062!4m8!1m0!1m5!1m1!1s0x488845d0f24231ef:0xb7cf6d9b3165003!2m2!1d-4.3062062!2d55.865103!3e2'>To get Directions, please click here &#128516</a>"
+
+
+            marker3.addListener('click',() => {
+                infowindow3.open(map, marker3);
+            })
+            marker3prime.addListener('click',() => {
+                infowindow3.open(map, marker3prime);
+            })
+            const infowindow3 = new google.maps.InfoWindow({
+                content: info3,
+            });
+
+
+
+
+
+            //Glasgow Dalmarnock (The Legacy Hub)
+            let marker4 = new google.maps.Marker({
+                position : { lat: 55.8428, lng: -4.2175 },
+                map : map,
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+                icon : helper
+
+            })
+            let marker4prime = new google.maps.Marker({
+                position : { lat: 55.8428, lng: -4.2175 },
+                map : map,
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+                icon : svgMarker
+
+            })
+            let info4 ="<h1>Glasgow Dalmarnock (The Legacy Hub)</h1>" +
+                "<div id='Body'>The Legacy Hub now offers Do-It yourself Covid tests where there they will give you instructions on how to do the swab!</div>" +
+                "<a href='https://www.google.com/maps/dir//Glasgow+Dalmarnock+(The+Legacy+Hub)/@55.865103,-4.3083949,17z/data=!4m2!4m1!3e2'>To get Directions, please click here &#128516</a>"
+
+
+            marker4.addListener('click',() => {
+                infowindow4.open(map, marker4);
+            })
+            marker4prime.addListener('click',() => {
+                infowindow4.open(map, marker4prime);
+            })
+            const infowindow4 = new google.maps.InfoWindow({
+                content: info4,
+            });
+
+
+
+
+
+
+            // St Francis Community Centre
+            let marker5 = new google.maps.Marker({
+                position : { lat: 55.8462, lng: -4.2454 },
+                map : map,
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+                icon : helper
+            })
+            let marker5prime = new google.maps.Marker({
+                position : { lat: 55.8462, lng: -4.2454 },
+                map : map,
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+                icon : svgMarker
+            })
+
+            let info5 ="<h1>St Francis Community Centre</h1>" +
+                "<div id='Body'>St Francis Community Centre now offers Do-It yourself Covid tests where there they will give you instructions on how to do the swab!</div>" +
+                "<a href='https://www.google.com/maps/dir//St+Francis+Community+Centre/@55.8460076,-4.2781317,12z/data=!4m2!4m1!3e2'>To get Directions, please click here &#128516</a>"
+
+
+            marker5.addListener('click',() => {
+                infowindow5.open(map, marker5);
+            })
+            marker5prime.addListener('click',() => {
+                infowindow5.open(map, marker5prime);
+            })
+            const infowindow5 = new google.maps.InfoWindow({
+                content: info5,
+            });
+
+
+
+
+            //Ibrox Football Stadium
+            let marker6 = new google.maps.Marker({
+                position : { lat: 55.8515, lng: -4.3104 },
+                map : map,
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+                icon : helper
+
+            })
+            let marker6prime = new google.maps.Marker({
+                position : { lat: 55.8515, lng: -4.3104 },
+                map : map,
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+                icon : svgMarker
+            })
+
+            let info6 ="<h1>Ibrox Football Stadium</h1>" +
+                "<div id='Body'>Ibrox Football Stadium now offers Do-It yourself Covid tests where there they will give you instructions on how to do the swab!</div>" +
+                "<a href='https://www.google.com/maps/dir//Ibrox+Football+Stadium/@55.8463015,-4.3151867,12z/data=!4m2!4m1!3e2'>To get Directions, please click here &#128516</a>"
+
+
+            marker6.addListener('click',() => {
+                infowindow6.open(map, marker6);
+            })
+            marker6prime.addListener('click',() => {
+                infowindow6.open(map, marker6prime);
+            })
+            const infowindow6 = new google.maps.InfoWindow({
+                content: info6,
+            });
+
+
+
+
+
+
+            //pollock community centre glasgow
+            let marker7 = new google.maps.Marker({
+                position : { lat: 55.8313, lng: -4.3413 },
+                map : map,
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+                icon : helper
+            })
+            let marker7prime = new google.maps.Marker({
+                position : { lat: 55.8313, lng: -4.3413 },
+                map : map,
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+                icon : svgMarker
+            })
+
+            let info7 ="<h1>Pollock Community Centre Glasgow</h1>" +
+                "<div id='Body'>Pollock Community Centre now offers Do-It yourself Covid tests where there they will give you instructions on how to do the swab!</div>" +
+                "<a href='https://www.google.com/maps/dir//Pollok+Community+Centre,+Langton+Road,+Glasgow,+UK/@55.8312456,-4.4113001,12z/data=!4m9!4m8!1m0!1m5!1m1!1s0x4888489c3fd8c9d1:0xc6022828f09c6e42!2m2!1d-4.3412607!2d55.8312655!3e2'>To get Directions, please click here &#128516</a>"
+
+
+            marker7.addListener('click',() => {
+                infowindow7.open(map, marker7);
+            })
+            marker7prime.addListener('click',() => {
+                infowindow7.open(map, marker7prime);
+            })
+            const infowindow7 = new google.maps.InfoWindow({
+                content: info7,
+            });
+
+
+
+
+
+            //Barlia Football Centre
+            let marker8 = new google.maps.Marker({
+                position : { lat: 55.8068205, lng: -4.2285163 },
+                map : map,
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+                icon : helper
+            })
+            let marker8prime = new google.maps.Marker({
+                position : { lat: 55.8068205, lng: -4.2285163 },
+                map : map,
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+                icon : svgMarker
+            })
+
+            let info8 ="<h1>Barlia Football Centre</h1>" +
+                "<div id='Body'>Barlia Football Centre now offers Do-It yourself Covid tests where there they will give you instructions on how to do the swab!</div>" +
+                "<a href='https://www.google.com/maps/dir//Barlia+Football+Centre,+Glenwood+Business+Centre,+Castlemilk+Dr,+Glasgow+G45+9UH,+United+Kingdom/@55.8063242,-4.2986552,12z/data=!3m1!4b1!4m9!4m8!1m0!1m5!1m1!1s0x48884730777be8fb:0x13cc44b560d0c4e2!2m2!1d-4.2286158!2d55.8063441!3e2'>To get Directions, please click here &#128516</a>"
+
+
+            marker8.addListener('click',() => {
+                infowindow8.open(map, marker8);
+            })
+            marker8prime.addListener('click',() => {
+                infowindow8.open(map, marker8prime);
+            })
+            const infowindow8 = new google.maps.InfoWindow({
+                content: info8,
+            });
+
+
+
+
+            //Paisley (Bridge Street Car Park)
+            let marker9 = new google.maps.Marker({
+                position : { lat: 55.843413, lng:  -4.420714 },
+                map : map,
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+                icon : helper
+            })
+            let marker9prime = new google.maps.Marker({
+                position : { lat: 55.843413, lng:  -4.420714 },
+                map : map,
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+                icon : svgMarker
+            })
+
+
+            let info9 ="<h1>Paisley (Bridge Street Car Park)</h1>" +
+                "<div id='Body'>Bridge Street Car Park in Paisley now offers Do-It yourself Covid tests where there they will give you instructions on how to do the swab!</div>" +
+                "<a href='https://www.google.com/maps/dir//Bridge+Street+Car+Park/@55.8492175,-4.4119701,12z/data=!3m1!4b1!4m2!4m1!3e2'>To get Directions, please click here &#128516</a>"
+
+
+            marker9.addListener('click',() => {
+                infowindow9.open(map, marker9);
+            })
+            marker9prime.addListener('click',() => {
+                infowindow9.open(map, marker9prime);
+            })
+            const infowindow9 = new google.maps.InfoWindow({
+                content: info9,
+            });
+
+
+
+
+            //Inverclide (Crawfurdsburn Community Centre)
+            let marker10 = new google.maps.Marker({
+                position : { lat: 55.941972, lng:   -4.733287 },
+                map : map,
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+                icon : helper
+            });
+            let marker10prime = new google.maps.Marker({
+                position : { lat: 55.941972, lng:   -4.733287 },
+                map : map,
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+                icon : svgMarker
+            });
+
+            let info10 ="<h1>Inverclide (Crawfurdsburn Community Centre)</h1>" +
+                "<div id='Body'>Inverclide (Crawfurdsburn Community Centre) now offers Do-It yourself Covid tests where there they will give you instructions on how to do the swab!</div>" +
+                "<a href='https://www.google.com/maps/dir//Crawfurdsburn+Community+Centre,+1+E+Crawford+St,+Greenock+PA15,+United+Kingdom/@55.8492175,-4.4119701,12z/data=!4m9!4m8!1m0!1m5!1m1!1s0x4889af25b252fb89:0x69c324a5b7b61d15!2m2!1d-4.7333728!2d55.9416355!3e2'>To get Directions, please click here &#128516</a>"
+
+
+            marker10.addListener('click',() => {
+                infowindow10.open(map, marker10);
+            })
+            marker10prime.addListener('click',() => {
+                infowindow10.open(map, marker10prime);
+            })
+            const infowindow10 = new google.maps.InfoWindow({
+                content: info10,
+            });
+
+
+
+
+            infoLoc = new google.maps.InfoWindow({
+                content : "<div id='win'> Current Location </div>"
+            })
+
+            infoWindow = new google.maps.InfoWindow();
+            const locationButton = document.createElement("button");
+            locationButton.textContent = "    Covid-19 Test Centres       ";
+            locationButton.classList.add("custom-map-control-button");
+            map.controls[google.maps.ControlPosition.LEFT].push(
+                locationButton
+            );
+
+            locationButton.addEventListener('click',() =>
+            {
+                toggleBounce
+                toggleBounce
+                toggleBounce
+                map.setCenter({lat: 55.8642, lng: -4.2518 })
+                map.setZoom(13)
+            })
+            locationButton.addEventListener('click',() => {
+                toggleBounce
+            })
+            // Try HTML5 geolocation.
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const pos = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude,
+                        };
+
+                        let currentLocation =  new google.maps.Marker({
+                            position : pos,
+                            map : map,
+                            draggable: false,
+                            animation: google.maps.Animation.DROP,
+                            icon : location
+
+                        });
+                        const infolocation = new google.maps.InfoWindow({
+                            content: 'You Are Here!',
+                        });
+                        currentLocation.addListener('click',() => {
+                            infolocation.open(map, currentLocation);
+                        })
+                        const findlocation = document.createElement("button");
+                        findlocation.textContent = "   Where am I   ";
+                        findlocation.classList.add("custom-map-control-button");
+                        map.controls[google.maps.ControlPosition.LEFT].push(
+                            findlocation
+                        );
+                        findlocation.addEventListener('click',() => {
+                            map.setCenter(pos);
+                            infolocation.open(map, currentLocation);
+                        })
+                        map.setCenter(pos);
+                    },
+                    () => {
+                        handleLocationError(true, infoWindow, map.getCenter());
+                    }
+                );
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+
+
+            function toggleBounce() {
+                console.log('shud be jumping')
+                if (marker.getAnimation() !== null) {
+                    marker.setAnimation(null);
+                    marker1.setAnimation(null);
+                    marker2.setAnimation(null);
+                    marker2prime.setAnimation(null);
+                    marker3.setAnimation(null);
+                    marker3prime.setAnimation(null);
+                    marker4.setAnimation(null);
+                    marker4prime.setAnimation(null);
+                    marker5.setAnimation(null);
+                    marker5prime.setAnimation(null);
+                    marker6.setAnimation(null);
+                    marker6prime.setAnimation(null);
+                    marker7.setAnimation(null);
+                    marker7prime.setAnimation(null);
+                    marker8.setAnimation(null);
+                    marker8prime.setAnimation(null);
+                    marker9.setAnimation(null);
+                    marker9prime.setAnimation(null);
+                    marker10.setAnimation(null);
+                    marker10prime.setAnimation(null);
+
+                } else {
+                    marker.setAnimation(google.maps.Animation.BOUNCE);
+                    marker1.setAnimation(google.maps.Animation.BOUNCE);
+                    marker2.setAnimation(google.maps.Animation.BOUNCE);
+                    marker2prime.setAnimation(google.maps.Animation.BOUNCE);
+                    marker3.setAnimation(google.maps.Animation.BOUNCE);
+                    marker3prime.setAnimation(google.maps.Animation.BOUNCE);
+                    marker4.setAnimation(google.maps.Animation.BOUNCE);
+                    marker4prime.setAnimation(google.maps.Animation.BOUNCE);
+                    marker5.setAnimation(google.maps.Animation.BOUNCE);
+                    marker5prime.setAnimation(google.maps.Animation.BOUNCE);
+                    marker6.setAnimation(google.maps.Animation.BOUNCE);
+                    marker6prime.setAnimation(google.maps.Animation.BOUNCE);
+                    marker7.setAnimation(google.maps.Animation.BOUNCE);
+                    marker7prime.setAnimation(google.maps.Animation.BOUNCE);
+                    marker8.setAnimation(google.maps.Animation.BOUNCE);
+                    marker8prime.setAnimation(google.maps.Animation.BOUNCE);
+                    marker9.setAnimation(google.maps.Animation.BOUNCE);
+                    marker9prime.setAnimation(google.maps.Animation.BOUNCE);
+                    marker10.setAnimation(google.maps.Animation.BOUNCE);
+                    marker10prime.setAnimation(google.maps.Animation.BOUNCE);
+                    marker.setAnimation(null);
+                    marker1.setAnimation(null);
+                    marker2.setAnimation(null);
+                    marker2prime.setAnimation(null);
+                    marker3.setAnimation(null);
+                    marker3prime.setAnimation(null);
+                    marker4.setAnimation(null);
+                    marker4prime.setAnimation(null);
+                    marker5.setAnimation(null);
+                    marker5prime.setAnimation(null);
+                    marker6.setAnimation(null);
+                    marker6prime.setAnimation(null);
+                    marker7.setAnimation(null);
+                    marker7prime.setAnimation(null);
+                    marker8.setAnimation(null);
+                    marker8prime.setAnimation(null);
+                    marker9.setAnimation(null);
+                    marker9prime.setAnimation(null);
+                    marker10.setAnimation(null);
+                    marker10prime.setAnimation(null);
+                }
+            }
+        }
+
+
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(
+                browserHasGeolocation
+                    ? "Error: The Geolocation service failed."
+                    : "Error: Your browser doesn't support geolocation."
+            );
+            infoWindow.open(map);
+        }
+
+
+    </script>
+</head>
+<body>
+<div id="map"></div>
+
+<!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+<script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwbwCFZMDRnAl51mLG62irqfFg8HaXKzc&callback=initMap&libraries=&v=weekly"
+        async
+></script>
+<script type ="text/javascript" src="js/linkServiceWorker.js"></script>
+
+<footer class="bg-dark text-center text-white">
+    <div class="navBarWrapper">
+        <div class="container p-4 pb-0">
+            <section class="mb-4">
+                <a class="btn btn-outline-light btn-floating m-1" href="scoreboard.html" role="button"
+                ><i class="fas fa-clipboard-list fa-lg"></i
+                ></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="chatRoomView.php" role="button"
+                ><i class="fas fa-comment-alt fa-lg"></i
+                ></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="TaskPage.php" role="button"
+                ><i class="fas fa-clipboard-check fa-lg"></i
+                ></a>
+
+            </section>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
+
