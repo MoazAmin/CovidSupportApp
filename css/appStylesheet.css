@@ -1,0 +1,118 @@
+html,
+body {
+	background-color: #b2ebf2;
+	font-size: 1.5vh;
+	font-family: sans-serif;
+	overflow: hidden;
+	height: 100%;
+	width: auto;
+}
+
+h1 {
+	font-size: 1.5rem;
+}
+
+h5 {
+	font-size: 1.5rem;
+	text-align: center;
+}
+
+#scoreboardCard {
+	height: 58vh;
+}
+
+#chatroomCard {
+	height: 62vh;
+}
+
+#accountHistoryDiv {
+	width: auto;
+	height: 60vh;
+}
+.taskBody{
+	background: url(balloon.svg);
+	background-size: 125%;
+}
+
+#chatHistoryDiv {
+	width: auto;
+	height: 52vh;
+	overflow-y: scroll;
+}
+
+.navBarWrapper {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 9vmax;
+	background-color: black;
+}
+
+.card {
+	width: 80%;
+}
+
+
+#high  {
+	font-family: "Times New Roman";
+	font-weight: lighter;
+	font-size: 12px;
+	color: black;
+	justify-content: center;
+	text-align: center;
+}
+
+
+#cardUgly {
+	/*max-width:80%;*/
+	width : auto ;
+}
+
+#TaskTodayCard {
+	width: auto;
+
+}
+h3 {
+	font-size: 17px;
+	font-weight: bold;
+}
+div.checkbox_task {
+	text-align: center;
+	font-size: 20px;
+	font-weight: normal;
+
+}
+#Desc {
+	font-size: 13px;
+}
+.collapsible {
+	background-color: lightgrey;
+	color: black;
+	cursor: pointer;
+	padding: 18px;
+	width: 100%;
+	border: none;
+	text-align: left;
+	outline: none;
+	font-size: 15px;
+}
+
+.active, .collapsible:hover {
+	background-color: lightgrey;
+}
+
+.content {
+	padding: 0 18px;
+	max-height: 0;
+	overflow: scroll;
+	transition: max-height 0.2s ease-out;
+	background-color: #f1f1f1;
+}
+
+
+
+
+
+
+
